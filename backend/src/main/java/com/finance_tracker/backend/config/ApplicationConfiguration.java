@@ -13,19 +13,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.finance_tracker.backend.service.CustomUserDetailsService;
+
 @Configuration
 public class ApplicationConfiguration {
-    private final UserRepository userRepository;
+    //private final UserRepository userRepository;
 
-    public ApplicationConfiguration(UserRepository userRepository) {
+    /*public ApplicationConfiguration(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
+    }*/
 
-    @Bean
-    UserDetailsService userDetailsService() {
+   /* @Bean
+    UserDetailsService userDetailsService(UserRepository userRepository) {
         return email -> userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
+    }*/
 
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
@@ -38,11 +40,12 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    AuthenticationProvider authenticationProvider() {
+    AuthenticationProvider authenticationProvider(CustomUserDetailsService userDetailsService,
+        BCryptPasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
 
         return authProvider;
     }

@@ -1,42 +1,44 @@
 package com.finance_tracker.backend.response;
 
+import jakarta.servlet.http.Cookie;
+
 public class LoginResponse {
-    private String token;
+    private Cookie token;
 
-    private long expiresIn;
+    private int expiresIn;
 
-    private String refreshToken;
+    private Cookie refreshToken;
 
-    public String getToken() {
+    public Cookie getToken() {
         return token;
     }
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String accessToken, String refreshToken, Long expirationTime) {
+    public LoginResponse(Cookie accessToken, Cookie refreshToken, Integer expirationTime) {
         this.token = accessToken;
         this.expiresIn = expirationTime;
         this.refreshToken = refreshToken;
     }
 
-    public void setToken(String token) {
+    public void setToken(Cookie token) {
         this.token = token;
     }
 
-    public long getExpiresIn() {
+    public int getExpiresIn() {
         return this.expiresIn;
     }
 
-    public void setExpiresIn(long expiresIn) {
+    public void setExpiresIn(int expiresIn) {
         this.expiresIn = expiresIn;
     }
 
-    public String getRefreshToken() {
+    public Cookie getRefreshToken() {
         return this.refreshToken;
     }
 
-    public void setRefreshToken(String refreshToken) {
+    public void setRefreshToken(Cookie refreshToken) {
         this.refreshToken = refreshToken;
     }
 

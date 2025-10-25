@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,16 +28,16 @@ public class JwtService {
     private String secretKey;
 
     @Value("${jwt.expiration}")
-    private long jwtExpiration;
+    private int jwtExpiration;
 
     @Value("${jwt.refreshExpiration}")
-    private long jwtRefreshExpiration;
+    private int jwtRefreshExpiration;
 
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     private final ModelMapper modelMapper;
 
-    public JwtService(UserDetailsService userDetailsService, ModelMapper modelMapper) {
+    public JwtService(CustomUserDetailsService userDetailsService, ModelMapper modelMapper) {
         this.userDetailsService = userDetailsService;
         this.modelMapper = modelMapper;
     }
@@ -62,13 +64,13 @@ public class JwtService {
                 .builder()
                 .claim("username", userDetails.getUsername())
                 .setSubject(userDetails.getEmail())
-                .setIssuedAt(new Date())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtRefreshExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public long getExpirationTime() {
+    public int getExpirationTime() {
         return jwtExpiration;
     }
 
@@ -133,11 +135,11 @@ public class JwtService {
         return user;
     }
 
-    public long getJwtExpiration() {
+    public int getJwtExpiration() {
         return this.jwtExpiration;
     }
 
-    public long getJwtRefreshExpiration() {
+    public int getJwtRefreshExpiration() {
         return this.jwtRefreshExpiration;
     }
 

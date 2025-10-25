@@ -1,10 +1,11 @@
+import Header from "@/components/Header"
+import SideNav from "@/components/SideNav"
+
 export default function HomePage() {
     return (
         <div>
-            <h1>
-                hallo123
-            </h1>
-
+            Hallo
         </div>
+
     )
 }

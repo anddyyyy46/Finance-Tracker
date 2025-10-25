@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Layout from "@/components/Layout";
 
 const queryClient = new QueryClient(); // QueryClient-Instanz erstellen
 const darkTheme = createTheme({
@@ -22,27 +23,64 @@ const darkTheme = createTheme({
     },
   },
   components: {
-    MuiTextField: {
+    MuiPickersTextField: {
       styleOverrides: {
         root: {
-          '& .MuiInputBase-root': {
-            color: '#fff', // Weißer Text im Dark Mode
-            backgroundColor: '#424242', // Dunkler Hintergrund im Dark Mode
+          color: "#fff",
+          "& .MuiFormLabel-root": {
+            color: "#fff !important",
           },
-          '& .MuiInputLabel-root': {
-            color: '#fff', // Weiße Label-Farbe im Dark Mode
+          "& .MuiInputBase-root": {
+            color: "#fff !important",
           },
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: '#fff', // Weiße Border im Dark Mode
-            },
-            '&:hover fieldset': {
-              borderColor: '#fff',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: '#90caf9', // Fokus mit Blau im Dark Mode
-            },
+        },
+      },
+    },
+    MuiPickersOutlinedInput: {
+      styleOverrides: {
+        root: {
+          color: "#fff !important",
+          backgroundColor: "#000 !important",
+          "& .MuiPickersInputBase-input": {
+            color: "#fff !important",
           },
+          "& .MuiSvgIcon-root": {
+            color: "#fff !important",
+            fill: "white !important",
+          },
+          "& .MuiPickersOutlinedInput-notchedOutline": {
+            borderColor: "#fff !important",
+          },
+          "&:hover .MuiPickersOutlinedInput-notchedOutline": {
+            borderColor: "#fff !important",
+          },
+          "&.Mui-focused .MuiPickersOutlinedInput-notchedOutline": {
+            borderColor: "#90caf9 !important",
+          },
+        },
+      },
+    },
+    MuiPickersInputBase: {
+      styleOverrides: {
+        root: {
+          color: "#fff !important",
+          "& .MuiPickersSectionList-sectionContent": {
+            color: "#fff !important",
+          },
+          "& .MuiPickersSectionList-section": {
+            color: "#fff !important",
+          },
+          "& .MuiPickersSectionList-sectionSeparator": {
+            color: "#fff !important",
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#000 !important",
+          color: "#fff !important",
         },
       },
     },
@@ -53,8 +91,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={darkTheme}>
-        <Component {...pageProps} />
-        <ToastContainer position="top-left" autoClose={5000} />
+        <Layout>
+          <Component {...pageProps} />
+          <ToastContainer position="top-left" autoClose={5000} />
+        </Layout>
       </ThemeProvider>
     </QueryClientProvider>
   );

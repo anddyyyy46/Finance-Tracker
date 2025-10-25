@@ -1,3 +1,4 @@
+import Password from '@/components/Password';
 import { useAuthMutations } from '@/mutations/useAuthMutations';
 import { Button, TextField } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -30,15 +31,7 @@ export default function loginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <TextField
-                    margin="dense"
-                    label="Passwort"
-                    type="password"
-                    fullWidth
-                    variant="outlined"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <Password password={password} setPassword={setPassword}></Password>
                 <Button variant="contained" onClick={handleLogin}>Einloggen</Button>
             </div>
         </div>

@@ -35,13 +35,13 @@ export const useAuthMutations = () => {
                     headers: { 'Content-Type': 'application/json' },
                 });
                 if (!res.ok) {
-                    throw new Error("SignUp fehlgeschlagen: " + await res.json());
+                    throw new Error("SignUp fehlgeschlagen: " + await res.text());
                 }
                 const createdUser = await res.json()
-                console.log(createdUser)
                 return createdUser;
             }
             catch (error: any) {
+                console.log(error)
                 toast.error("" + error);
                 return null;
             }

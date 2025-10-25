@@ -1,24 +1,24 @@
-import { useState } from 'react';
-
-
-
-export const useInput = (initialValue: string) => {
-    const [value, setValue] = useState(initialValue);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
-    };
-
-    return {
-        value,
-        onChange: handleChange,
-    };
-};
+import { toast } from "react-toastify";
 
 export const fetchBackend = async (path: string, options: RequestInit) => {
     const backendURL = process.env.NEXT_PUBLIC_BACKEND_URL;
     const res = await fetch(`${backendURL}${path}`, options);
     return res;
+}
+
+export const fetchProxy = async (path: string, options: RequestInit) => {
+    try {
+        const res = await fetch(`/api/proxy?path=/${path}`, options);
+        if (!res.ok) {
+            const err = await res.text();
+            console.log("Error: ", err)
+            throw new Error('Fetch fehlgeschlagen: '+ err);
+        }
+        return res;
+    }
+    catch (error) {
+        toast.error("" + error)
+    }
 }
 
 export type ReadUserDto = {
@@ -40,3 +40,8 @@ export type LoginUserDto = {
     password: string
 }
 
+export type LoginResponse = {
+    token: any,
+    refreshToken: any,
+    expiresIn: number,
+}

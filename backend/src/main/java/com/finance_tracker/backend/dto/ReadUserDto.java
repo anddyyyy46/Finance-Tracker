@@ -1,11 +1,22 @@
 package com.finance_tracker.backend.dto;
 
 public class ReadUserDto {
+
+    private String id;
+
     private String email;
 
     private String fullname;
 
     private String username;
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return this.email;

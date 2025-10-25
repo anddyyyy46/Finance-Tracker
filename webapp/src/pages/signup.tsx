@@ -1,3 +1,4 @@
+import Password from "@/components/Password";
 import { useAuthMutations } from "@/mutations/useAuthMutations";
 import { TextField, Button } from "@mui/material";
 import { useRouter } from "next/router";
@@ -52,15 +53,7 @@ export default function signUpPage() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <TextField
-                    margin="dense"
-                    label="Passwort"
-                    type="password"
-                    fullWidth
-                    variant="outlined"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <Password password={password} setPassword={setPassword}></Password>
                 <Button variant="contained" onClick={handleSignUp}>SignUp</Button>
             </div>
         </div>

@@ -2,6 +2,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } 
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useAuthMutations } from '@/mutations/useAuthMutations';
+import Password from './Password';
 
 interface LoginDialogProps {
     open: boolean;
@@ -41,15 +42,7 @@ export default function LoginDialog({ open, onClose }: LoginDialogProps) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <TextField
-                    margin="dense"
-                    label="Passwort"
-                    type="password"
-                    fullWidth
-                    variant="outlined"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <Password password={password} setPassword={setPassword}></Password>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleCancel}>Abbrechen</Button>

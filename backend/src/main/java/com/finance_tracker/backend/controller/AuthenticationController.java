@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.HttpHeaders;
 
+import jakarta.servlet.http.Cookie;
+
 @RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
@@ -69,14 +71,14 @@ public class AuthenticationController {
 
         ResponseCookie accessTokenCookie = ResponseCookie.from("accessToken", accessToken)
                 .httpOnly(true) // Verhindert den Zugriff über JavaScript
-                .secure(system == "dev") // Nur über HTTPS (sicher)
+                .secure(system.equals("dev")) // Nur über HTTPS (sicher)
                 .path("/") // Gilt für die gesamte Domain
                 .maxAge(jwtService.getExpirationTime()) // Gültigkeit: 15 Minuten
                 .build();
 
         ResponseCookie refreshTokenCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true) // Verhindert den Zugriff über JavaScript
-                .secure(system == "dev") // Nur über HTTPS (sicher)
+                .secure(system.equals("dev")) // Nur über HTTPS (sicher)
                 .path("/") // Gilt für die gesamte Domain
                 .maxAge(jwtService.getJwtRefreshExpiration()) // Gültigkeit: 7 Tage
                 .build();
@@ -88,7 +90,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> request) {
+    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> request, HttpServletResponse response) {;
         String refreshToken = request.get("refreshToken");
         if (jwtService.isRefreshTokenValid(refreshToken)) {
             String email = jwtService.extractUsername(refreshToken);
@@ -96,8 +98,28 @@ public class AuthenticationController {
             if (jwtService.isTokenValid(refreshToken, user)) {
                 String newAccessToken = jwtService.generateToken(user);
                 String newRefreshToken = jwtService.generateRefreshToken(user);
-                LoginResponse loginResponse = new LoginResponse(newAccessToken, newRefreshToken,
+               /* ResponseCookie accessTokenCookie = ResponseCookie.from("accessToken", newAccessToken)
+                        .httpOnly(true) // Verhindert den Zugriff über JavaScript
+                        .secure(system.equals("dev")) // Nur über HTTPS (sicher)
+                        .path("/") // Gilt für die gesamte Domain
+                        .maxAge(jwtService.getExpirationTime()) // Gültigkeit: 15 Minuten
+                        .build();*/
+
+                Cookie accessTokenCookie = new Cookie("accessToken", newAccessToken);
+                    accessTokenCookie.setHttpOnly(true);
+                    accessTokenCookie.setSecure(system.equals("dev"));
+                    accessTokenCookie.setPath("/");
+                    accessTokenCookie.setMaxAge(jwtService.getExpirationTime());
+
+                Cookie refreshTokenCookie = new Cookie("refreshToken", newRefreshToken);
+                        refreshTokenCookie.setHttpOnly(true);
+                        refreshTokenCookie.setSecure(system.equals("dev"));
+                        refreshTokenCookie.setPath("/");
+                        refreshTokenCookie.setMaxAge(jwtService.getJwtRefreshExpiration()); // 7 Tage
+                LoginResponse loginResponse = new LoginResponse(accessTokenCookie, refreshTokenCookie,
                         jwtService.getExpirationTime());
+                response.addCookie(refreshTokenCookie);
+                response.addCookie(accessTokenCookie);
                 return ResponseEntity.ok(loginResponse);
             } else {
                 throw new InvalidRefreshTokenException("Invalid or expired refresh token");
