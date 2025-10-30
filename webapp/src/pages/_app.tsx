@@ -23,59 +23,7 @@ const darkTheme = createTheme({
     },
   },
   components: {
-    MuiPickersTextField: {
-      styleOverrides: {
-        root: {
-          color: "#fff",
-          "& .MuiFormLabel-root": {
-            color: "#fff !important",
-          },
-          "& .MuiInputBase-root": {
-            color: "#fff !important",
-          },
-        },
-      },
-    },
-    MuiPickersOutlinedInput: {
-      styleOverrides: {
-        root: {
-          color: "#fff !important",
-          backgroundColor: "#000 !important",
-          "& .MuiPickersInputBase-input": {
-            color: "#fff !important",
-          },
-          "& .MuiSvgIcon-root": {
-            color: "#fff !important",
-            fill: "white !important",
-          },
-          "& .MuiPickersOutlinedInput-notchedOutline": {
-            borderColor: "#fff !important",
-          },
-          "&:hover .MuiPickersOutlinedInput-notchedOutline": {
-            borderColor: "#fff !important",
-          },
-          "&.Mui-focused .MuiPickersOutlinedInput-notchedOutline": {
-            borderColor: "#90caf9 !important",
-          },
-        },
-      },
-    },
-    MuiPickersInputBase: {
-      styleOverrides: {
-        root: {
-          color: "#fff !important",
-          "& .MuiPickersSectionList-sectionContent": {
-            color: "#fff !important",
-          },
-          "& .MuiPickersSectionList-section": {
-            color: "#fff !important",
-          },
-          "& .MuiPickersSectionList-sectionSeparator": {
-            color: "#fff !important",
-          },
-        },
-      },
-    },
+    
     MuiPaper: {
       styleOverrides: {
         root: {
