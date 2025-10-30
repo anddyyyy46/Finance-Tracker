@@ -4,10 +4,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import com.finance_tracker.backend.model.User;
-import com.finance_tracker.backend.repository.UserRepository;
 import com.finance_tracker.backend.Exception.UserNotFoundException;
 import com.finance_tracker.backend.dto.ReadUserDto;
+import com.finance_tracker.backend.model.User;
+import com.finance_tracker.backend.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -43,6 +43,7 @@ public class UserService {
         String email = authentication.getName();
         User user = this.getUserByEmail(email);
         ReadUserDto readUserDto = modelMapper.map(user, ReadUserDto.class);
+        System.out.println(readUserDto.toString());
         return readUserDto;
 
     }

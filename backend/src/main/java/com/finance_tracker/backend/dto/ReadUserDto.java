@@ -42,4 +42,16 @@ public class ReadUserDto {
         this.username = username;
     }
 
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", fullname='" + getFullname() + "'" +
+            ", username='" + getUsername() + "'" +
+            "}";
+    }
+
+
 }

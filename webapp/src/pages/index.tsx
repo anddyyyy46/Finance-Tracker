@@ -8,7 +8,7 @@ export default function Home() {
   const [signUpOpen, setSignUpOpen] = useState(false);
   return (
     <div className="h-full">
-      <main className="h-8/10 flex items-center justify-center">
+      <main className="h-full flex items-center justify-center">
         <div >
           <div>
             <h2>Finance-tracker: </h2>
@@ -21,10 +21,7 @@ export default function Home() {
             <SignUpDialog open={signUpOpen} onClose={() => setSignUpOpen(false)} />
           </div>
         </div>
-      </main >
-      <footer className="h-2/10 bg-[#1c1c1c] rounded-t-lg p-2">
-        Impressum
-      </footer>
+      </main>
     </div >
   );
 }

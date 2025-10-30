@@ -6,21 +6,20 @@ import { useRouter } from "next/router";
 
 type ButtonProps = {
     pathName? : string;
-    onclick: ()=>void
 
 }
 
-export default function AddBtn({onclick, pathName}: ButtonProps){
+export default function AddBtn({pathName}: ButtonProps){
     const router = useRouter();
-    const curRoute = router.pathname;
     return (
-        <div className="absolute right-4 bottom-4">
-            <Link href={`${pathName}/new`} className={curRoute === `${pathName}` ? 'font-bold' : ''}>
+        <div className="absolute right-8 bottom-4">
+            <Link href={`${pathName}/new`}>
                     
-                <Button onClick={onclick}
-                    variant="outlined" >
+                <button
+                   className="bg-white w-16 h-16 cursor-pointer rounded-full hover:bg-gray-400 text-black text-3xl p-4
+                   transition-colors duration-200 shadow-md">
                     +
-                </Button>
+                </button>
             </Link>
         </div>
     )

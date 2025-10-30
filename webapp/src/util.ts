@@ -6,9 +6,14 @@ export const fetchBackend = async (path: string, options: RequestInit) => {
     return res;
 }
 
-export const fetchProxy = async (path: string, options: RequestInit) => {
+export const fetchProxy = async (path: string, options: RequestInit, noJson = false) => {
     try {
-        const res = await fetch(`/api/proxy?path=/${path}`, options);
+        let res = null;
+        if(noJson){
+            res = await fetch(`/api/nojsonproxy?path=/${path}`, options);
+        } else {
+            res = await fetch(`/api/proxy?path=/${path}`, options);
+        }
         if (!res.ok) {
             const err = await res.text();
             console.log("Error: ", err)
@@ -44,4 +49,69 @@ export type LoginResponse = {
     token: any,
     refreshToken: any,
     expiresIn: number,
+}
+
+export type CreateCategoryDto = {
+    title: string;
+    description?: string;
+    color?: string;
+}
+
+export type ReadCategoryDto = {
+    id: number;
+    title: string;
+    description: string;
+    color: string;
+}
+
+export type CreatePaymentPartnerDto = {
+    name: string;
+    contact?: string;
+    email?: string;
+    telNr?: string;
+}
+
+export type ReadPaymentPartnerDto = {
+    id: number;
+    name: string;
+    contact: string;
+    email: string;
+    telNr: string;
+}
+
+export type CategoryCountDto = {
+    category: ReadCategoryDto;
+    count: number;
+}
+
+export type CreateTransactionDateDto = {
+    startDate: Date;
+    endDate: Date;
+}
+
+export interface UserReadDto{
+    id: string;
+    email: string;
+    fullname: string;
+    username: string;
+}
+export interface ReadTransactionDto {
+    id: string;
+    user: UserReadDto;
+    amount: number;
+    category?: ReadCategoryDto;
+    date?: string;
+    transactionMedium?: string;
+    paymentPartner?: ReadPaymentPartnerDto;
+    importance?: string;
+    createdAt?: Date;
+}
+export interface CreateTransactionDto {
+    amount: number;
+    date?: string;
+    paymentPartnerId?: number;
+    transactionMedium?: string;
+    categoryId?: number;
+    importance?: string;
+
 }

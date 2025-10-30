@@ -10,20 +10,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
       const method = req.method;
       const defaultHeader = {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
-      //const headers = Object.fromEntries(Object.entries(req.headers))
+      const headers = Object.fromEntries(Object.entries(req.headers))
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${path}`, {
         method,
-        headers: defaultHeader, //{ ...defaultHeader, ...headers } headers contains e.g. content type for request to this proxy,
+        headers: { ...defaultHeader, ...headers },
         body: method === 'GET' || method === 'DELETE' ? undefined : req.body,
       })
-
       if(!response.ok){
         const err =  await response.text()
         res.status(response.status).json({"Error": err})
-      } else {
+      }else {
       const data = await response.json()
 
       res.status(response.status).json(data);

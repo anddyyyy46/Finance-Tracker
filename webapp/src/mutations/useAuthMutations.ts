@@ -1,9 +1,11 @@
-import { fetchBackend } from '@/util';
-import { useMutation } from '@tanstack/react-query';
+import { fetchBackend, fetchProxy } from '@/util';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ReadUserDto, CreateUserDto, LoginUserDto } from '@/util';
 import { toast } from 'react-toastify';
 
 export const useAuthMutations = () => {
+
+    const queryClient = useQueryClient()
 
     const login = useMutation({
         mutationFn: async (user: LoginUserDto): Promise<Number | null> => {
@@ -49,12 +51,28 @@ export const useAuthMutations = () => {
 
     })
 
+    const getUser = useQuery({
+        queryFn: async(): Promise<ReadUserDto | null> => {
+            const res = await fetchProxy("user", {
+                method: "GET"
+            });
+            if(!res){
+                return null;
+            }
+            const user = await res.json()
+            return user;
 
-    //const { isPending, error, mutateAsync, data } = useMutation({ mutationFn: login });
+
+        },
+        queryKey: ["userDetail"],
+    });
+
+
 
     return {
         login,
-        signUp
+        signUp,
+        getUser
     }
 
 

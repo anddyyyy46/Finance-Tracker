@@ -1,4 +1,4 @@
-package com.finance_tracker.backend.model;
+package com.finance_tracker.backend.dto;
 
 import java.util.Date;
 
@@ -7,48 +7,34 @@ import com.finance_tracker.backend.utils.GermanDecimalConverter;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "transactions")
-public class Transaction extends ExtendedBaseEntity {
+public class CreateTransactionDto {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-    @Column(nullable = false)
-    @CsvBindByName(column="Betrag")
+    @NotNull(message = "amount must be set")
+    @CsvCustomBindByName(column="Betrag", converter = GermanDecimalConverter.class)
     private Double amount;
 
-    @Column()
     @CsvCustomBindByName(column="Buchungstag",  converter = DateConverter.class)
     private Date date;
 
-    @Column(name = "transactionmedium")
     @CsvBindByName(column="Buchungstext")
     private String transactionMedium;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "paymentpartner_id")
-    //@CsvBindByName(column="Beguenstigter/Zahlungspflichtiger")
-    private PaymentPartner paymentPartner;
 
-    @Column()
+    private Integer categoryId;
+
+    //@CsvBindByName(column="Beguenstigter/Zahlungspflichtiger")
+    private Integer paymentPartnerId;
+
     private String importance;
 
-
-    public Category getCategory() {
-        return this.category;
+    public Integer getCategoryId() {
+        return this.categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Double getAmount() {
@@ -75,12 +61,12 @@ public class Transaction extends ExtendedBaseEntity {
         this.transactionMedium = transactionMedium;
     }
 
-    public PaymentPartner getPaymentPartner() {
-        return this.paymentPartner;
+    public Integer getPaymentPartnerId() {
+        return this.paymentPartnerId;
     }
 
-    public void setPaymentPartner(PaymentPartner paymentPartner) {
-        this.paymentPartner = paymentPartner;
+    public void setPaymentPartnerId(Integer paymentPartnerId) {
+        this.paymentPartnerId = paymentPartnerId;
     }
 
     public String getImportance() {
@@ -92,19 +78,17 @@ public class Transaction extends ExtendedBaseEntity {
     }
 
 
+
     @Override
     public String toString() {
         return "{" +
-            " category='" + getCategory() + "'" +
+            " categoryId='" + getCategoryId() + "'" +
             ", amount='" + getAmount() + "'" +
             ", date='" + getDate() + "'" +
             ", transactionMedium='" + getTransactionMedium() + "'" +
-            ", paymentPartner='" + getPaymentPartner() + "'" +
+            ", paymentPartnerId='" + getPaymentPartnerId() + "'" +
             ", importance='" + getImportance() + "'" +
             "}";
     }
 
-
-
-    
 }

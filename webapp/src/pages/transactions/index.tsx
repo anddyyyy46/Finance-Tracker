@@ -9,6 +9,8 @@ import {
     Paper,
     TablePagination,
     Typography,
+    Box,
+    IconButton,
 } from '@mui/material';
 import { useState } from 'react';
 import { useTransactionsMutations } from '@/mutations/useTransactionsMutations';
@@ -16,16 +18,9 @@ import { ReadTransactionDto } from '@/dtos/Dtos';
 import AddBtn from '@/components/AddBtn';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { DeleteOutline } from '@mui/icons-material';
+import { format } from 'date-fns';
 
-/*const rows: DataRow[] = 
-[
-    { id: 1, name: 'Alice', email: 'alice@example.com' },
-    { id: 2, name: 'Bob', email: 'bob@example.com' },
-    { id: 3, name: 'Charlie', email: 'charlie@example.com' },
-    { id: 4, name: 'David', email: 'david@example.com' },
-    { id: 5, name: 'Eve', email: 'eve@example.com' },
-    { id: 6, name: 'Frank', email: 'frank@example.com' },
-];*/
 
 export default function TablePage() {
     const [page, setPage] = useState(0);
@@ -34,12 +29,8 @@ export default function TablePage() {
     const router = useRouter();
     const curRoute = router.pathname;
 
-    const {getAllTransactions} = useTransactionsMutations();
-    const { data, isLoading, isError, refetch } = getAllTransactions;
-    useEffect(() => {
-        
-      }, []);
-
+    const {getAllTransactions, deleteTransaction} = useTransactionsMutations();
+    const { data } = getAllTransactions;
 
     const rows: ReadTransactionDto[] = data ?? []
 
@@ -52,15 +43,25 @@ export default function TablePage() {
         setPage(0);
     };
 
+    const handleDelete = async(id: string) => {
+        await deleteTransaction.mutateAsync(parseInt(id));
+
+    }
+
     return (
-        <div>
-            <TableContainer>
+        <div className="flex-1 min-h-0 flex flex-col">
+            <TableContainer className='flex-1 overflow-auto'>
                 <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell><strong>ID</strong></TableCell>
-                            <TableCell><strong>Name</strong></TableCell>
-                            <TableCell><strong>Amount</strong></TableCell>
+                            <TableCell><strong>Betrag</strong></TableCell>
+                            <TableCell><strong>Datum</strong></TableCell>
+                            <TableCell><strong>Kategorie</strong></TableCell>
+                            <TableCell><strong>Transaktionsmedium</strong></TableCell>
+                            <TableCell><strong>Transaktionspartner</strong></TableCell>
+                           {/*  <TableCell><strong>Eintragsdatum</strong></TableCell>*/}
+                            <TableCell style={{width: "50px"}}></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -71,15 +72,24 @@ export default function TablePage() {
                                         {row.id}
                                     </Link>
                                 </TableCell>
-                                <TableCell>{row.user.fullname}</TableCell>
                                 <TableCell>{row.amount}</TableCell> 
+                                <TableCell>{row.date ? format(row.date, 'dd.MM.yyyy') : '-'}</TableCell>
+                                <TableCell>{row.category?.title}</TableCell> 
+                                <TableCell>{row.transactionMedium}</TableCell> 
+                                <TableCell>{row.paymentPartner?.name}</TableCell> 
+                               {/* <TableCell>{row.createdAt?.getDate()}</TableCell> */}
+                                <TableCell onClick={()=>handleDelete(row.id)}>
+                                    <IconButton>
+                                        <DeleteOutline></DeleteOutline>
+                                    </IconButton>
+                                </TableCell> 
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
 
-            <TablePagination
+            {/*<TablePagination
                 component="div"
                 count={rows.length}
                 page={page}
@@ -87,9 +97,10 @@ export default function TablePage() {
                 rowsPerPage={rowsPerPage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 rowsPerPageOptions={[3, 5, 10]}
-            />
+            />*/}
         
         <AddBtn pathName='/transactions'></AddBtn>
         </div>
+
     );
 }

@@ -6,19 +6,19 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from "@/components/Layout";
 
-const queryClient = new QueryClient(); // QueryClient-Instanz erstellen
+const queryClient = new QueryClient();
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark', // Dunkler Modus
+    mode: 'dark',
     primary: {
       main: '#90caf9',
     },
     background: {
-      default: '#303030', // Dunkler Hintergrund im Dark Mode
-      paper: '#424242',   // Dunkler Papier-Hintergrund
+      default: '#303030',
+      paper: '#424242', 
     },
     text: {
-      primary: '#ffffff', // Weißer Text im Dark Mode
+      primary: '#ffffff',
       secondary: '#bbbbbb',
     },
   },
