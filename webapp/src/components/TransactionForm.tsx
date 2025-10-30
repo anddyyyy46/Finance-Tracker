@@ -20,7 +20,7 @@ type TransactionFormProps = {
 
     const [amount, setAmount] = useState(0.0);
     const [transactionMedium, setTransactionMedium] = useState("");
-    const [date, setDate] = useState<Date | undefined>(new Date());
+    const [date, setDate] = useState<Date | undefined | null>(new Date());
     const [category, setCategory] = useState<ReadCategoryDto | null>(null)
     const [paymentPartner, setPaymentPartner] = useState<ReadPaymentPartnerDto | null>(null)
   
