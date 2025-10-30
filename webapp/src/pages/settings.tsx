@@ -3,8 +3,8 @@ import InputPopover from "@/components/InputPopover";
 import { useCategoriesMutations } from "@/mutations/useCategoriesMutations";
 import { usePaymentPartnerMutations } from "@/mutations/usePaymentPartnerMutations";
 import { CreateCategoryDto, CreatePaymentPartnerDto, fetchProxy } from "@/util";
-import { Box, Button, List, ListItem, ListItemText, Popover, TextField, Typography } from "@mui/material";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { Box, Button, Divider, List, ListItem, ListItemText, Popover, TextField, Typography } from "@mui/material";
+import { ChangeEvent, Fragment, MouseEvent, useState } from "react";
 
 export default function Settings(){
 
@@ -70,13 +70,24 @@ export default function Settings(){
                     title="Neu"
                 />
                 </div>
+                <Box
+                    sx={{
+                        borderRadius: 2,
+                        boxShadow: 3,
+                        maxWidth: 400,
+                    }}
+                    >
                 <List>
-                    {paymentPartners?.map((paymentPartner) => (
-                        <ListItem key={paymentPartner.id}>
-                            <ListItemText primary={paymentPartner.name} secondary={paymentPartner.email} />
-                        </ListItem>
+                    {paymentPartners?.map((paymentPartner, index) => (
+                        <Fragment>
+                            <ListItem key={paymentPartner.id}>
+                                <ListItemText primary={paymentPartner.name} secondary={paymentPartner.email} />
+                            </ListItem>
+                            {index < paymentPartners.length - 1 && <Divider variant="middle" component="li" />}
+                        </Fragment>
                     ))}
                 </List>
+                </Box>
             </div>
             <div>
                 <div className="flex items-center">
@@ -99,13 +110,24 @@ export default function Settings(){
                     title="Neu"
                 />
                 </div>
+                <Box
+                    sx={{
+                        borderRadius: 2,
+                        boxShadow: 3,
+                        maxWidth: 400,
+                    }}
+                    >
                 <List>
-                    {categories?.map((category) => (
+                    {categories?.map((category, index) => (
+                        <Fragment>
                         <ListItem key={category.id}>
                             <ListItemText primary={category.title} secondary={category.description} />
                         </ListItem>
+                        {index < categories.length - 1 && <Divider variant="middle" component="li" />}
+                        </Fragment>
                     ))}
                 </List>
+                </Box>
             </div>
         </div>
     )
