@@ -1,21 +1,10 @@
 package com.finance_tracker.backend.controller;
 
-import com.finance_tracker.backend.model.User;
-import com.finance_tracker.backend.dto.LoginUserDto;
-import com.finance_tracker.backend.Exception.InvalidAttributeException;
-import com.finance_tracker.backend.Exception.InvalidRefreshTokenException;
-import com.finance_tracker.backend.dto.CreateUserDto;
-import com.finance_tracker.backend.response.LoginResponse;
-import com.finance_tracker.backend.service.AuthenticationService;
-import com.finance_tracker.backend.service.JwtService;
-
-import io.jsonwebtoken.MalformedJwtException;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
-
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +13,19 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.HttpHeaders;
+import com.finance_tracker.backend.Exception.InvalidAttributeException;
+import com.finance_tracker.backend.Exception.InvalidRefreshTokenException;
+import com.finance_tracker.backend.dto.CreateUserDto;
+import com.finance_tracker.backend.dto.LoginUserDto;
+import com.finance_tracker.backend.model.User;
+import com.finance_tracker.backend.response.LoginResponse;
+import com.finance_tracker.backend.service.AuthenticationService;
+import com.finance_tracker.backend.service.JwtService;
 
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 @RequestMapping("/auth")
 @RestController
@@ -90,7 +88,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> request, HttpServletResponse response) {;
+    public ResponseEntity<?> refreshToken(@RequestBody Map<String, String> request, HttpServletResponse response) {
         String refreshToken = request.get("refreshToken");
         if (jwtService.isRefreshTokenValid(refreshToken)) {
             String email = jwtService.extractUsername(refreshToken);

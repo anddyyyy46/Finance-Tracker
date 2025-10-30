@@ -36,17 +36,16 @@ export async function middleware(request: NextRequest) {
                 const loginResponse: LoginResponse = await resRefresh.json()
                 const accessCookie = loginResponse.token;
                 const refreshCookie = loginResponse.refreshToken;
-                
 
                 const response = NextResponse.next();
 
-                response.cookies.set("accessToken", accessCookie?.value, {
+                response.cookies.set("accessToken", accessCookie, {
                     httpOnly: true,
                     secure: true,
                     maxAge: 604800,
                     path: "/",
                   });
-                response.cookies.set("refreshToken", refreshCookie?.value, {
+                response.cookies.set("refreshToken", refreshCookie, {
                     httpOnly: true,
                     secure: true,
                     maxAge: 604800,
