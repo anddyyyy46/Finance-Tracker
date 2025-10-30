@@ -46,8 +46,8 @@ export type LoginUserDto = {
 }
 
 export type LoginResponse = {
-    token: any,
-    refreshToken: any,
+    token: string,
+    refreshToken: string,
     expiresIn: number,
 }
 

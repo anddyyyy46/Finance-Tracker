@@ -1,40 +1,22 @@
-import Header from "@/components/Header"
-import SideNav from "@/components/SideNav"
-import { useCategoriesMutations } from "@/mutations/useCategoriesMutations";
 import { useTransactionsMutations } from "@/mutations/useTransactionsMutations";
-import { List, ListItem, ListItemText, ListSubheader, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { ReadTransactionDto } from "@/util";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { format } from "date-fns";
-import Link from "next/link";
 import { useEffect } from "react";
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
-
-
-const pieData = [
-    { name: "A", value: 40 },
-    { name: "B", value: 30 },
-    { name: "C", value: 30 },
-  ];
-  
-  type graphDataType = {
-    date?: string,
-    total?: number,
-  }
 
 
 
 export default function HomePage() {
 
   const {getAllTransactions, getCategoriesCount, getTransactionsBetweenDates} = useTransactionsMutations();
-  const {getAllCategories} = useCategoriesMutations();
   const {data} = getAllTransactions;
-  const {data: categories} = getAllCategories;
   const {data: categoriesCount} = getCategoriesCount;
-  const {mutateAsync, data: transactionsBetween} = getTransactionsBetweenDates;
+  const {mutateAsync} = getTransactionsBetweenDates;
   const now = new Date();
   const startDate = new Date();
   startDate.setDate(now.getDate() - 30);
 
-  let graphData: graphDataType[] = [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +30,7 @@ export default function HomePage() {
     fetchData();
     
     
-  }, [mutateAsync]); 
+  }, [mutateAsync, now, startDate]); 
   
 
   const sumAmountsPerDay = (transactions: ReadTransactionDto[]) => {
@@ -68,7 +50,7 @@ export default function HomePage() {
 
   const dailySums = data ? sumAmountsPerDay(data) : [];
 
-  let pieData = (categoriesCount || [] ).map((categoryCount)=>{
+  const pieData = (categoriesCount || [] ).map((categoryCount)=>{
     return {
       name: categoryCount.category?.title,
       value: categoryCount.count

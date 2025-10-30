@@ -1,10 +1,9 @@
-import AddBtn from "@/components/AddBtn";
 import InputPopover from "@/components/InputPopover";
 import { useCategoriesMutations } from "@/mutations/useCategoriesMutations";
 import { usePaymentPartnerMutations } from "@/mutations/usePaymentPartnerMutations";
-import { CreateCategoryDto, CreatePaymentPartnerDto, fetchProxy } from "@/util";
-import { Box, Button, Divider, List, ListItem, ListItemText, Popover, TextField, Typography } from "@mui/material";
-import { ChangeEvent, Fragment, MouseEvent, useState } from "react";
+import { CreateCategoryDto, CreatePaymentPartnerDto } from "@/util";
+import { Box, Divider, List, ListItem, ListItemText} from "@mui/material";
+import { Fragment, MouseEvent, useState } from "react";
 
 export default function Settings(){
 
@@ -79,8 +78,8 @@ export default function Settings(){
                     >
                 <List>
                     {paymentPartners?.map((paymentPartner, index) => (
-                        <Fragment>
-                            <ListItem key={paymentPartner.id}>
+                        <Fragment key={paymentPartner.id}>
+                            <ListItem>
                                 <ListItemText primary={paymentPartner.name} secondary={paymentPartner.email} />
                             </ListItem>
                             {index < paymentPartners.length - 1 && <Divider variant="middle" component="li" />}
@@ -119,11 +118,11 @@ export default function Settings(){
                     >
                 <List>
                     {categories?.map((category, index) => (
-                        <Fragment>
-                        <ListItem key={category.id}>
-                            <ListItemText primary={category.title} secondary={category.description} />
-                        </ListItem>
-                        {index < categories.length - 1 && <Divider variant="middle" component="li" />}
+                        <Fragment key={category.id}>
+                            <ListItem>
+                                <ListItemText primary={category.title} secondary={category.description} />
+                            </ListItem>
+                            {index < categories.length - 1 && <Divider variant="middle" component="li" />}
                         </Fragment>
                     ))}
                 </List>

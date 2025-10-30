@@ -1,8 +1,4 @@
-import { Button } from "@mui/material"
 import Link from "next/link"
-import { useRouter } from "next/router";
-
-
 
 type ButtonProps = {
     pathName? : string;
@@ -10,7 +6,6 @@ type ButtonProps = {
 }
 
 export default function AddBtn({pathName}: ButtonProps){
-    const router = useRouter();
     return (
         <div className="absolute right-8 bottom-4">
             <Link href={`${pathName}/new`}>

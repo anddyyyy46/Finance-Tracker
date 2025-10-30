@@ -7,13 +7,11 @@ import { useTransactionsMutations } from "@/mutations/useTransactionsMutations";
 export default function UploadBtn(){
 
     const [open, setOpen] = useState(false);
-    const [file, setFile] = useState<File | null>(null);
 
     const {uploadTransactions} = useTransactionsMutations();
 
     const sendFile = async(event: ChangeEvent<HTMLInputElement>)=>{
         if(event.target?.files?.[0]){
-            setFile(event.target.files[0])
             await uploadTransactions.mutateAsync(event.target.files[0])
             
         }

@@ -1,14 +1,12 @@
 import { fetchBackend, fetchProxy } from '@/util';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type { ReadUserDto, CreateUserDto, LoginUserDto } from '@/util';
 import { toast } from 'react-toastify';
 
 export const useAuthMutations = () => {
 
-    const queryClient = useQueryClient()
-
     const login = useMutation({
-        mutationFn: async (user: LoginUserDto): Promise<Number | null> => {
+        mutationFn: async (user: LoginUserDto): Promise<number | null> => {
             try {
                 const res = await fetchBackend('/auth/login', {
                     method: 'POST',
@@ -42,7 +40,7 @@ export const useAuthMutations = () => {
                 const createdUser = await res.json()
                 return createdUser;
             }
-            catch (error: any) {
+            catch (error) {
                 console.log(error)
                 toast.error("" + error);
                 return null;

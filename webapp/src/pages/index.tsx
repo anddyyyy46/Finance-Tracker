@@ -15,7 +15,7 @@ export default function Home() {
   const { login } = useAuthMutations();
   const router = useRouter()
 
-  const useDemoAcc = async() => {
+  const demoAcc = async() => {
     if (process.env.NEXT_PUBLIC_DEMO_ACC_MAIL && process.env.NEXT_PUBLIC_DEMO_ACC_PW){
       const statusNumber = await login.mutateAsync({ 
         email: process.env.NEXT_PUBLIC_DEMO_ACC_MAIL,
@@ -44,7 +44,7 @@ export default function Home() {
           <div>
             <Button variant='outlined' onClick={() => setSignUpOpen(true)}>Sign up</Button>
             <Button variant='outlined' onClick={() => setLoginOpen(true)}>Login</Button>
-            <Button variant='outlined' onClick={() => useDemoAcc()}>Demo</Button>
+            <Button variant='outlined' onClick={() => demoAcc()}>Demo</Button>
             <LoginDialog open={loginOpen} onClose={() => setLoginOpen(false)} />
             <SignUpDialog open={signUpOpen} onClose={() => setSignUpOpen(false)} />
           </div>

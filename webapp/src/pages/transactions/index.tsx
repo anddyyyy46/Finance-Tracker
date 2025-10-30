@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
     Table,
     TableBody,
@@ -6,25 +6,18 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
-    TablePagination,
-    Typography,
-    Box,
     IconButton,
 } from '@mui/material';
-import { useState } from 'react';
 import { useTransactionsMutations } from '@/mutations/useTransactionsMutations';
-import { ReadTransactionDto } from '@/dtos/Dtos';
 import AddBtn from '@/components/AddBtn';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { DeleteOutline } from '@mui/icons-material';
 import { format } from 'date-fns';
+import { ReadTransactionDto } from '@/util';
 
 
 export default function TablePage() {
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(3);
 
     const router = useRouter();
     const curRoute = router.pathname;
@@ -34,14 +27,6 @@ export default function TablePage() {
 
     const rows: ReadTransactionDto[] = data ?? []
 
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
 
     const handleDelete = async(id: string) => {
         await deleteTransaction.mutateAsync(parseInt(id));

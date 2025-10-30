@@ -1,30 +1,22 @@
-import { useForm, Controller } from "react-hook-form";
-import { TextField, Button, Box, Stack, Autocomplete } from "@mui/material";
+import { TextField, Button, Autocomplete } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { de } from "date-fns/locale";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useCategoriesMutations } from "@/mutations/useCategoriesMutations";
 import { CreateTransactionDto, ReadCategoryDto, ReadPaymentPartnerDto } from "@/util";
 import { usePaymentPartnerMutations } from "@/mutations/usePaymentPartnerMutations";
 
 type TransactionFormProps = {
-    mode: "create" | "edit";
     defaultValues?: CreateTransactionDto;
-    onSubmit: (data: any) => void;
+    onSubmit: (data: CreateTransactionDto) => void;
     loading?: boolean;
   };
   
   export function TransactionForm({
-    mode,
-    defaultValues,
     onSubmit,
-    loading = false,
   }: TransactionFormProps) {
-    const { handleSubmit, control } = useForm({
-      defaultValues: defaultValues,
-    });
 
     const [amount, setAmount] = useState(0.0);
     const [transactionMedium, setTransactionMedium] = useState("");

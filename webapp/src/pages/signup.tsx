@@ -4,7 +4,7 @@ import { TextField, Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function signUpPage() {
+export default function SignUpPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
