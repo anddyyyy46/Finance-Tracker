@@ -14,8 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         'Authorization': `Bearer ${token}`
       }
       //const headers = Object.fromEntries(Object.entries(req.headers))
-      const backendUrl = process.env.NEXT_PUBLIC_SYSTEM ==="DEV" ? process.env.NEXT_PUBLIC_BACKEND_URL : process.env.NEXT_PUBLIC_PROD_BACKEND_URL;
-      const response = await fetch(`${backendUrl}${path}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${path}`, {
         method,
         headers: defaultHeader, //{ ...defaultHeader, ...headers } headers contains e.g. content type for request to this proxy,
         body: method === 'GET' || method === 'DELETE' ? undefined : req.body,
