@@ -108,7 +108,7 @@ export interface ReadTransactionDto {
 }
 export interface CreateTransactionDto {
     amount: number;
-    date?: string;
+    date?: Date;
     paymentPartnerId?: number;
     transactionMedium?: string;
     categoryId?: number;

@@ -13,24 +13,17 @@ export default function HomePage() {
   const {data} = getAllTransactions;
   const {data: categoriesCount} = getCategoriesCount;
   const {mutateAsync} = getTransactionsBetweenDates;
-  const now = new Date();
-  const startDate = new Date();
-  startDate.setDate(now.getDate() - 30);
 
 
   useEffect(() => {
     const fetchData = async () => {
       await mutateAsync({
-        startDate: startDate,
-        endDate: now,
+        startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 Tage vorher
+        endDate: new Date(),
       });
-      
     };
-
     fetchData();
-    
-    
-  }, [mutateAsync, now, startDate]); 
+  }, [mutateAsync]);
   
 
   const sumAmountsPerDay = (transactions: ReadTransactionDto[]) => {
