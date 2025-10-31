@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {   
-    const token = req.cookies.accessToken;
+console.log("im proxy")	    
+const token = req.cookies.accessToken;
     const url = new URL(req.url!, `http://${req.headers.host}`)
     const path = url.searchParams.get('path') || ''
       if (!token) {
@@ -22,7 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       if(!response.ok){
         const err =  await response.text()
-        res.status(response.status).json({"Error": err})
+	console.log("Fehler: ", err)        
+res.status(response.status).json({"Error": err})
       } else {
       const data = await response.json()
 
