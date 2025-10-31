@@ -22,7 +22,9 @@ export default function Home() {
         password: process.env.NEXT_PUBLIC_DEMO_ACC_PW || "", 
       })
       if (statusNumber === 200) {
-        router.push("/home")
+        setTimeout(() => {
+          router.push("/home");
+        }, 50);
       }
     } else {
       toast.error("Demo Account aktuell nicht verfügbar")

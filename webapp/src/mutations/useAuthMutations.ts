@@ -14,7 +14,11 @@ export const useAuthMutations = () => {
                     headers: { 'Content-Type': 'application/json' },
                     credentials: "include"
                 });
-                if (!res.ok) throw new Error('Login fehlgeschlagen: ' + res.json());
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error('Login fehlgeschlagen: ' + JSON.stringify(data));
+                }
                 const statusNumber = res.status;
                 return statusNumber;
 
