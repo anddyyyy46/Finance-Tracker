@@ -45,10 +45,10 @@ services:
     build: ./webapp
     container_name: next_webapp
     restart: always
-    env_file:
-      - ./webapp/.env
     environment:
-      NEXT_PUBLIC_BACKEND_URL: http://backend:8080
+      NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL}
+      NEXT_PUBLIC_DEMO_ACC_MAIL: ${NEXT_PUBLIC_DEMO_ACC_MAIL}
+      NEXT_PUBLIC_DEMO_ACC_PW: ${NEXT_PUBLIC_DEMO_ACC_PW}
     ports:
       - "3000:3000"
     depends_on:
