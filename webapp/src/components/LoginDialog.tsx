@@ -1,5 +1,5 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField } from '@mui/material';
-import { useRouter } from 'next/router';
+//import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useAuthMutations } from '@/mutations/useAuthMutations';
 import Password from './Password';
@@ -12,7 +12,7 @@ interface LoginDialogProps {
 export default function LoginDialog({ open, onClose }: LoginDialogProps) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const router = useRouter()
+    //const router = useRouter()
 
     const { login } = useAuthMutations();
 
@@ -24,7 +24,8 @@ export default function LoginDialog({ open, onClose }: LoginDialogProps) {
         const statusNumber = await login.mutateAsync({ email, password })
         if (statusNumber === 200) {
             onClose()
-            router.push("/home")
+            //router.push("/home")
+            window.location.href = '/home';
         }
     }
 

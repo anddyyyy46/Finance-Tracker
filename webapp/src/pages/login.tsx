@@ -1,21 +1,22 @@
 import Password from '@/components/Password';
 import { useAuthMutations } from '@/mutations/useAuthMutations';
 import { Button, TextField } from '@mui/material';
-import { useRouter } from 'next/router';
+//import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const router = useRouter()
+    //const router = useRouter()
 
     const { login } = useAuthMutations();
 
     const handleLogin = async () => {
         const statusNumber = await login.mutateAsync({ email, password })
         if (statusNumber === 200) {
-            router.push("/home")
+            //router.push("/home")
+            window.location.href = '/home';
         }
     }
     return (
