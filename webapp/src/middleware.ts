@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl
 
     if (!token && !accessablePaths.includes(pathname)) {
-        return NextResponse.redirect(new URL('/login', request.url));
+	return NextResponse.redirect(new URL('/login', request.url));
     }
     const res = await fetchBackend("/auth/validate", {
         method: "POST",
