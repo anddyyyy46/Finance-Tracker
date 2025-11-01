@@ -5,7 +5,7 @@ export default function detailTransaction() {
 
     return (
         <div>
-            Hello
+            Coming Soon
         </div>
     )
 
