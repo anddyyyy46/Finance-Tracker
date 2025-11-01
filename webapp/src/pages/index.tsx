@@ -3,7 +3,7 @@ import { useState } from 'react';
 import LoginDialog from '@/components/LoginDialog';
 import SignUpDialog from '@/components/SignUpDialog';
 import { useAuthMutations } from '@/mutations/useAuthMutations';
-import { useRouter } from 'next/router';
+//import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
 
 
   const { login } = useAuthMutations();
-  const router = useRouter()
+  //const router = useRouter()
 
   const demoAcc = async() => {
     if (process.env.NEXT_PUBLIC_DEMO_ACC_MAIL && process.env.NEXT_PUBLIC_DEMO_ACC_PW){
@@ -22,9 +22,9 @@ export default function Home() {
         password: process.env.NEXT_PUBLIC_DEMO_ACC_PW || "", 
       })
       if (statusNumber === 200) {
-        setTimeout(() => {
-          router.push("/home");
-        }, 50);
+        //router.push("/home");
+        window.location.href = '/home';
+       
       }
     } else {
       toast.error("Demo Account aktuell nicht verfügbar")
